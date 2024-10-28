@@ -5,6 +5,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import { HistorialModule } from './historial/historial.module';
 import { CitaModule } from './citas/citas.module';
+import { StatusController } from './status.controller';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { CitaModule } from './citas/citas.module';
     HistorialModule, 
     CitaModule, 
   ],
-  controllers: [],
+  controllers: [StatusController],
   providers: [],
 })
 export class AppModule {
