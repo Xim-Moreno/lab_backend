@@ -1,6 +1,18 @@
-const { ServerlessAdapter } = require('@nestjs/platform-serverless');
-const { AppModule } = require('./dist/app.module');  // Ajusta la ruta si es necesario
-const express = require('express');
-const app = express();
+const { NestFactory } = require('@nestjs/core');
+const { AppModule } = require('./dist/app.module');
 
-module.exports = ServerlessAdapter.forModule(AppModule, app);
+let app;
+
+async function bootstrap() {
+  if (!app) {
+    app = await NestFactory.create(AppModule);
+    await app.init();
+  }
+  return app;
+}
+
+module.exports = async (req, res) => {
+  const nestApp = await bootstrap();
+  await nestApp.getHttpAdapter().getInstance()(req, res);
+};
+
